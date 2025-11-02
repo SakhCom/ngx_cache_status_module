@@ -1,0 +1,51 @@
+# .clang-format aligned with nginx development guide
+
+BasedOnStyle: LLVM
+
+# Indentation
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ContinuationIndentWidth: 4
+IndentCaseLabels: true
+
+# Braces and blocks
+BreakBeforeBraces: Linux
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: false
+KeepEmptyLinesAtTheStartOfBlocks: false
+
+# Line length
+ColumnLimit: 120
+
+# Spacing
+SpaceBeforeParens: ControlStatements          # nginx style: space before '(' in functions and calls
+SpaceAfterCStyleCast: true
+SpacesBeforeTrailingComments: 1
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+SpaceInEmptyParentheses: false
+PointerAlignment: Right            # e.g. "u_char *p"
+ReferenceAlignment: Right
+AlignOperands: true
+
+# Alignment
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AlignTrailingComments: true
+
+# Wrapping of parameters/arguments
+BinPackParameters: false
+BinPackArguments: false
+PenaltyBreakBeforeFirstCallParameter: 50
+PenaltyBreakComment: 5
+
+# Includes
+SortIncludes: false
+IncludeBlocks: Preserve
+
+# Misc
+Cpp11BracedListStyle: false
+RemoveSemicolon: false
