@@ -13,7 +13,7 @@ make
 ## Директивы
 
 ```
-Синтаксис: cache_status;
+Синтаксис: cache_status [prom];
 Значение по умолчанию: ---
 Контекст: location
 ```
@@ -24,6 +24,10 @@ make
 ```
 location /cache-stat {
     cache_status;
+}
+
+location /cache-stat-prom {
+    cache_status prom;
 }
 ```
 
@@ -41,4 +45,19 @@ Updating: 0
 Revalidated: 0
 Hit: 2
 Misc: 0
+```
+
+```
+# HELP nginx_cache_status nginx cache status
+# TYPE nginx_cache_status counter
+nginx_cache_status{status="total"} 17
+nginx_cache_status{status="uncached"} 10
+nginx_cache_status{status="miss"} 0
+nginx_cache_status{status="bypass"} 0
+nginx_cache_status{status="expired"} 1
+nginx_cache_status{status="stale"} 0
+nginx_cache_status{status="updating"} 0
+nginx_cache_status{status="revalidated"} 0
+nginx_cache_status{status="hit"} 6
+nginx_cache_status{status="misc"} 0
 ```
