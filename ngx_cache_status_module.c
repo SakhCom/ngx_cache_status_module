@@ -177,6 +177,9 @@ static ngx_int_t ngx_status_prom_handler(ngx_http_request_t *r)
     }
     cnt = conf->shm->data;
 
+    
+    ngx_log_error(NGX_LOG_ALERT, ngx_cycle->log, 0, "cache_status: ngx_status_prom_handler %p", cnt);
+
     r->headers_out.content_type_len  = sizeof("text/plain") - 1;
     r->headers_out.content_type.len  = sizeof("text/plain") - 1;
     r->headers_out.content_type.data = (u_char *) "text/plain";
@@ -240,6 +243,10 @@ static ngx_int_t ngx_cache_status_init_shm_zone(ngx_shm_zone_t *shm_zone, void *
     }
 
     shm_zone->data = ngx_slab_alloc((ngx_slab_pool_t *) (shm_zone->shm.addr), sizeof(ngx_cache_status_counters));
+    if (shm_zone->data == NULL) {
+        ngx_log_error(NGX_LOG_ALERT, ngx_cycle->log, 0, "cache_status: slab alloc failed");
+        return NGX_ERROR;
+    }
 
     return NGX_OK;
 }
@@ -248,8 +255,16 @@ static void *ngx_cache_status_create_conf(ngx_conf_t *cf)
 {
     ngx_shm_zone_t          *shm_zone;
     ngx_cache_status_conf_t *conf;
-    shm_zone        = ngx_shared_memory_add(cf, &shm_name, 2 * ngx_pagesize, &ngx_cache_status_module);
-    conf            = ngx_palloc(cf->pool, sizeof(ngx_cache_status_conf_t));
+    shm_zone = ngx_shared_memory_add(cf, &shm_name, 2 * ngx_pagesize, &ngx_cache_status_module);
+    if (shm_zone == NULL) {
+        ngx_conf_log_error(NGX_LOG_ALERT, cf, 0, "cache_status: shm alloc failed");
+        return NULL;
+    }
+    conf     = ngx_palloc(cf->pool, sizeof(ngx_cache_status_conf_t));
+    if (conf == NULL) {
+        ngx_conf_log_error(NGX_LOG_ALERT, cf, 0, "cache_status: mem alloc failed");
+        return NULL;
+    }
     conf->shm       = shm_zone;
     conf->shm->init = ngx_cache_status_init_shm_zone;
     return conf;
