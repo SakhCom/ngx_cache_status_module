@@ -194,16 +194,16 @@ static ngx_int_t ngx_status_prom_handler(ngx_http_request_t *r)
 
     b->last = ngx_sprintf(b->last, "# HELP nginx_cache_status nginx cache status\n");
     b->last = ngx_sprintf(b->last, "# TYPE nginx_cache_status counter\n");
-    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"total\"} %d\n", cnt->total);
-    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"uncached\"} %d\n", cnt->uncached);
-    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"miss\"} %d\n", cnt->miss);
-    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"bypass\"} %d\n", cnt->bypass);
-    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"expired\"} %d\n", cnt->expired);
-    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"stale\"} %d\n", cnt->stale);
-    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"updating\"} %d\n", cnt->updating);
-    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"revalidated\"} %d\n", cnt->revalidated);
-    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"hit\"} %d\n", cnt->hit);
-    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"misc\"} %d\n", cnt->misc);
+    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"total\"} %uA\n", cnt->total);
+    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"uncached\"} %uA\n", cnt->uncached);
+    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"miss\"} %uA\n", cnt->miss);
+    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"bypass\"} %uA\n", cnt->bypass);
+    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"expired\"} %uA\n", cnt->expired);
+    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"stale\"} %uA\n", cnt->stale);
+    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"updating\"} %uA\n", cnt->updating);
+    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"revalidated\"} %uA\n", cnt->revalidated);
+    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"hit\"} %uA\n", cnt->hit);
+    b->last = ngx_sprintf(b->last, "nginx_cache_status{status=\"misc\"} %uA\n", cnt->misc);
 
     r->headers_out.status           = NGX_HTTP_OK;
     r->headers_out.content_length_n = b->last - b->pos;
